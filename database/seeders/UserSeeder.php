@@ -20,14 +20,14 @@ class UserSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
                 'role' => 'admin',
-                'password' => static::$password ??= Hash::make('password'),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
             ],
             [
                 'name' => 'User',
                 'email' => 'user@gmail.com',
                 'role' => 'user',
-                'password' => static::$password ??= Hash::make('password'),
-            ]
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
+            ],
         ]);
     }
 }
