@@ -1,10 +1,8 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-    <!--=============================
-                BREADCRUMB START
-            ==============================-->
-    <section class="fp__breadcrumb" style="background: url({{ config('settings.breadcrumb') }});">
+    <!--============================= BREADCRUMB START ==============================-->
+    <section class="fp__breadcrumb" style="background: url({{ asset('frontend/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
                 <div class="fp__breadcrumb_text">
@@ -17,14 +15,10 @@
             </div>
         </div>
     </section>
-    <!--=============================
-                BREADCRUMB END
-            ==============================-->
+    <!--============================= BREADCRUMB END ==============================-->
 
 
-    <!--=========================
-                SIGNIN START
-            ==========================-->
+    <!--========================= SIGNIN START ==========================-->
     <section class="fp__signin" style="background: url({{ asset('frontend/images/login_bg.jpg') }});">
         <div class="fp__signin_overlay pt_125 xs_pt_95 pb_100 xs_pb_70">
             <div class="container">
@@ -82,7 +76,5 @@
             </div>
         </div>
     </section>
-    <!--=========================
-                SIGNIN END
-            ==========================-->
+    <!--========================= SIGNIN END ==========================-->
 @endsection
