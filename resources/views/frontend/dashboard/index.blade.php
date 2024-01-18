@@ -2,8 +2,8 @@
 
 @section('content')
     <!--=============================
-                    BREADCRUMB START
-                ==============================-->
+                                            BREADCRUMB START
+                                        ==============================-->
     <section class="fp__breadcrumb" style="background: url({{ asset('frontend/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
@@ -18,13 +18,13 @@
         </div>
     </section>
     <!--=============================
-                    BREADCRUMB END
-                ==============================-->
+                                            BREADCRUMB END
+                                        ==============================-->
 
 
     <!--=========================
-                    DASHBOARD START
-                ==========================-->
+                                            DASHBOARD START
+                                        ==========================-->
     <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70">
         <div class="container">
             <div class="fp__dashboard_area">
@@ -120,37 +120,26 @@
                                             <div class="personal_info_text">
                                                 <p><span>Name:</span> Hasib Ahmed</p>
                                                 <p><span>Email:</span> hasibahmed@gmail.com</p>
-                                                <p><span>Phone:</span> 023 434 54354</p>
-                                                <p><span>Address:</span> 7232 Broadway Suite 308, Jackson Heights,
-                                                    11372, NY, United States </p>
                                             </div>
 
                                             <div class="fp_dash_personal_info_edit comment_input p-0">
-                                                <form>
+                                                <form method="POST" action="{{ route('profile.update') }}">
+                                                    @csrf
+                                                    @method('PUT')
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>name</label>
-                                                                <input type="text" placeholder="Name">
+                                                                <input type="text" placeholder="Name" name="name">
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6">
+                                                        <div class="col-xl-12 col-lg-12">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>email</label>
-                                                                <input type="email" placeholder="Email">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6">
-                                                            <div class="fp__comment_imput_single">
-                                                                <label>phone</label>
-                                                                <input type="text" placeholder="Phone">
+                                                                <input type="email" placeholder="Email" name="email">
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-12">
-                                                            <div class="fp__comment_imput_single">
-                                                                <label>address</label>
-                                                                <textarea rows="4" placeholder="Address"></textarea>
-                                                            </div>
                                                             <button type="submit" class="common_btn">submit</button>
                                                         </div>
                                                     </div>
@@ -1275,6 +1264,6 @@
     </div>
     <!-- CART POPUT END -->
     <!--=========================
-                    DASHBOARD END
-                ==========================-->
+                                            DASHBOARD END
+                                        ==========================-->
 @endsection
