@@ -2,8 +2,8 @@
 
 @section('content')
     <!--=============================
-                                            BREADCRUMB START
-                                        ==============================-->
+                                                BREADCRUMB START
+                                            ==============================-->
     <section class="fp__breadcrumb" style="background: url({{ asset('frontend/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
@@ -18,13 +18,13 @@
         </div>
     </section>
     <!--=============================
-                                            BREADCRUMB END
-                                        ==============================-->
+                                                BREADCRUMB END
+                                            ==============================-->
 
 
     <!--=========================
-                                            DASHBOARD START
-                                        ==========================-->
+                                                DASHBOARD START
+                                            ==========================-->
     <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70">
         <div class="container">
             <div class="fp__dashboard_area">
@@ -118,8 +118,8 @@
                                             </h4>
 
                                             <div class="personal_info_text">
-                                                <p><span>Name:</span> Hasib Ahmed</p>
-                                                <p><span>Email:</span> hasibahmed@gmail.com</p>
+                                                <p><span>Name:</span> {{ auth()->user()->name }}</p>
+                                                <p><span>Email:</span> {{ auth()->user()->email }}</p>
                                             </div>
 
                                             <div class="fp_dash_personal_info_edit comment_input p-0">
@@ -130,13 +130,15 @@
                                                         <div class="col-12">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>name</label>
-                                                                <input type="text" placeholder="Name" name="name">
+                                                                <input type="text" placeholder="Name" name="name"
+                                                                    value="{{ auth()->user()->name }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-12 col-lg-12">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>email</label>
-                                                                <input type="email" placeholder="Email" name="email">
+                                                                <input type="email" placeholder="Email" name="email"
+                                                                    value="{{ auth()->user()->email }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-12">
@@ -1264,6 +1266,6 @@
     </div>
     <!-- CART POPUT END -->
     <!--=========================
-                                            DASHBOARD END
-                                        ==========================-->
+                                                DASHBOARD END
+                                            ==========================-->
 @endsection
