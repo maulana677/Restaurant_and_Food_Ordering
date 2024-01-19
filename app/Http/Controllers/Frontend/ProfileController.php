@@ -38,7 +38,7 @@ class ProfileController extends Controller
 
     function updateAvatar(Request $request)
     {
-        /** handle image file */
+        /** menangani file gambar */
         $imagePath = $this->uploadImage($request, 'avatar');
 
         $user = Auth::user();
