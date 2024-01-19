@@ -2,8 +2,8 @@
 
 @section('content')
     <!--=============================
-                                                                    BREADCRUMB START
-                                                                ==============================-->
+                                                                            BREADCRUMB START
+                                                                        ==============================-->
     <section class="fp__breadcrumb" style="background: url({{ asset('frontend/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
@@ -69,8 +69,17 @@
                                     aria-controls="v-pills-settings" aria-selected="false"><span><i
                                             class="fas fa-user-lock"></i></span> Change Password </button>
 
-                                <button class="nav-link" type="button"><span> <i class="fas fa-sign-out-alt"></i>
-                                    </span> Logout</button>
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <button style="width: 100%;" class="nav-link"
+                                        onclick="event.preventDefault();
+                                                this.closest('form').submit();"
+                                        type="button"><span> <i class="fas fa-sign-out-alt"></i>
+                                        </span> Logout
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -1245,12 +1254,12 @@
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function(response){
-                        if(response.status === 'success'){
+                    success: function(response) {
+                        if (response.status === 'success') {
                             window.location.reload();
                         }
                     },
-                    error: function(error){
+                    error: function(error) {
                         console.error(response);
                     }
                 })
