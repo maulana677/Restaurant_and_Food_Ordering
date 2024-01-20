@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
@@ -19,9 +21,9 @@ class SliderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('admin.slider.create');
     }
 
     /**
@@ -29,7 +31,21 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $imagePath = $this->uploadImage($request, 'image');
+
+        $slider = new Slider();
+        $slider->image = $imagePath;
+        $slider->offer = $request->offer;
+        $slider->title = $request->title;
+        $slider->sub_title = $request->sub_title;
+        $slider->short_description = $request->short_description;
+        $slider->button_link = $request->button_link;
+        $slider->status = $request->status;
+        $slider->save();
+
+        toastr()->success('Created Successfully');
+
+        return to_route('admin.slider.index');
     }
 
     /**
