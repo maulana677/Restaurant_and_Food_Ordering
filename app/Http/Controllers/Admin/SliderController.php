@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SliderCreateRequest;
+use App\Http\Requests\Admin\SliderUpdateRequest;
 use App\Models\Slider;
 use App\Traits\FileUploadTrait;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
@@ -65,15 +67,32 @@ class SliderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+        return view('admin.slider.edit', compact('slider'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SliderUpdateRequest $request, string $id): RedirectResponse
     {
-        //
+        $slider = Slider::findOrFail($id);
+
+        /** Handle Image Upload */
+        $imagePath = $this->uploadImage($request, 'image', $slider->image);
+
+        $slider->image = !empty($imagePath) ? $imagePath : $slider->image;
+        $slider->offer = $request->offer;
+        $slider->title = $request->title;
+        $slider->sub_title = $request->sub_title;
+        $slider->short_description = $request->short_description;
+        $slider->button_link = $request->button_link;
+        $slider->status = $request->status;
+        $slider->save();
+
+        toastr()->success('Updated Successfully');
+
+        return to_route('admin.slider.index');
     }
 
     /**
