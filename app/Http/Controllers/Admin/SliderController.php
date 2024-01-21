@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SliderCreateRequest;
 use App\Models\Slider;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SliderCreateRequest $request)
     {
         $imagePath = $this->uploadImage($request, 'image');
 
