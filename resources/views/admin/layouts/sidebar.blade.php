@@ -58,6 +58,24 @@
                     <span>Slider</span>
                 </a>
             </li>
+
+            <li
+                class="dropdown {{ setSidebarActive([
+                    'admin.why-choose-us.*',
+                    'admin.banner-slider.*',
+                    'admin.chefs.*',
+                    'admin.app-download.index',
+                    'admin.testimonial.*',
+                    'admin.counter.index',
+                ]) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stream"></i>
+                    <span>Sections </span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setSidebarActive(['admin.why-choose-us.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.why-choose-us.index') }}">Why choose us</a>
+                    </li>
+                </ul>
+            </li>
             {{--  <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
