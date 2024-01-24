@@ -15,7 +15,7 @@
                             <h4>Why Choose Us Section Titles..</h4>
                         </div>
                         <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion" style="">
-                            <form action="#" method="POST">
+                            <form action="{{ route('admin.why-choose-title.update') }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
