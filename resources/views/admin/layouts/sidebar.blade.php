@@ -48,26 +48,19 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class=active><a class="nav-link" href="#"><i class="fas fa-fire"></i>General Dashboard</a>
+            <li class="{{ setSidebarActive(['admin.dashboard']) }}"><a class="nav-link"
+                    href="{{ route('admin.dashboard') }}"><i class="fas fa-fire"></i>General Dashboard</a>
             </li>
 
             <li class="menu-header">Starter</li>
 
-            <li>
+            <li class="dropdown {{ setSidebarActive(['admin.slider.*']) }}">
                 <a class="nav-link" href="{{ route('admin.slider.index') }}"><i class="fas fa-images"></i>
                     <span>Slider</span>
                 </a>
             </li>
 
-            <li
-                class="dropdown {{ setSidebarActive([
-                    'admin.why-choose-us.*',
-                    'admin.banner-slider.*',
-                    'admin.chefs.*',
-                    'admin.app-download.index',
-                    'admin.testimonial.*',
-                    'admin.counter.index',
-                ]) }}">
+            <li class="dropdown {{ setSidebarActive(['admin.why-choose-us.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stream"></i>
                     <span>Sections </span></a>
                 <ul class="dropdown-menu">
