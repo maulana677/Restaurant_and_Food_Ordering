@@ -37,10 +37,10 @@ class ProductDataTable extends DataTable
                 return $edit . $delete;
             })
             ->addColumn('price', function ($query) {
-                return currencyPosition($query->price);
+                return currency_IDR($query->price);
             })
             ->addColumn('offer_price', function ($query) {
-                return currencyPosition($query->offer_price);
+                return currency_IDR($query->offer_price);
             })
             ->addColumn('status', function ($query) {
                 if ($query->status === 1) {
