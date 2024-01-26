@@ -50,7 +50,6 @@ class SliderController extends Controller
         $slider->save();
 
         toastr()->success('Created Successfully');
-
         return to_route('admin.slider.index');
     }
 
@@ -91,7 +90,6 @@ class SliderController extends Controller
         $slider->save();
 
         toastr()->success('Updated Successfully');
-
         return to_route('admin.slider.index');
     }
 
