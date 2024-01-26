@@ -70,13 +70,18 @@
                 </ul>
             </li>
 
-            <li class="dropdown {{ setSidebarActive(['admin.category.*']) }}">
+            <li class="dropdown {{ setSidebarActive(['admin.category.*', 'admin.product.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-shopping-cart"></i>
                     <span>Manage Products </span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ setSidebarActive(['admin.category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.category.index') }}">Product Categories</a></li>
+                    <li class="{{ setSidebarActive(['admin.category.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.category.index') }}">Product Categories</a>
+                    </li>
+                    <li class="{{ setSidebarActive(['admin.product.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.product.index') }}">Products</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         </li>
