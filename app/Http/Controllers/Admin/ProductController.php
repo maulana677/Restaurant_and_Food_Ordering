@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProductCreateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Traits\FileUploadTrait;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -32,7 +37,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductCreateRequest $request): RedirectResponse
     {
         /** Handle image file */
         $imagePath = $this->uploadImage($request, 'image');
