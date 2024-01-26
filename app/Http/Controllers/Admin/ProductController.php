@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +13,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ProductDataTable $dataTable): View
+    public function index(ProductDataTable $dataTable): View|JsonResponse
     {
         return $dataTable->render('admin.product.index');
     }
