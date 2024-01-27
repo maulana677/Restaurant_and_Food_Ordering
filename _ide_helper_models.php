@@ -14,12 +14,85 @@ namespace App\Models{
 /**
  * App\Models\Category
  *
- * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int $status
+ * @property int $show_at_home
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereShowAtHome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  */
 	class Category extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Product
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $thumb_image
+ * @property int $category_id
+ * @property string $short_description
+ * @property string $long_description
+ * @property float $price
+ * @property float $offer_price
+ * @property int $quantity
+ * @property string|null $sku
+ * @property string|null $seo_title
+ * @property string|null $seo_description
+ * @property int $show_at_home
+ * @property int $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductGallery> $productImages
+ * @property-read int|null $product_images_count
+ * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereLongDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereOfferPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSeoTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereShortDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereShowAtHome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSku($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereThumbImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ */
+	class Product extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ProductGallery
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery query()
+ */
+	class ProductGallery extends \Eloquent {}
 }
 
 namespace App\Models{
