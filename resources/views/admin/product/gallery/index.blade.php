@@ -5,15 +5,12 @@
         <div class="section-header">
             <h1>Products Gallery ({{ $product->name }})</h1>
         </div>
-
         <div>
             <a href="{{ route('admin.product.index') }}" class="btn btn-primary my-3">Go Back</a>
         </div>
-
         <div class="card card-primary">
             <div class="card-header">
                 <h4>All Images</h4>
-
             </div>
             <div class="card-body">
                 <div class="col-md-8">
@@ -30,16 +27,13 @@
                 </div>
             </div>
         </div>
-
         <div class="card card-primary">
-
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Image</th>
                             <th>Action</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +49,6 @@
                         @if (count($images) === 0)
                             <tr>
                                 <td colspan='2' class="text-center">No data found!</td>
-
                             </tr>
                         @endif
                     </tbody>
