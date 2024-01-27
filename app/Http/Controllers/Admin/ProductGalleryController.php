@@ -8,6 +8,7 @@ use App\Models\ProductGallery;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class ProductGalleryController extends Controller
@@ -48,8 +49,16 @@ class ProductGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): Response
     {
-        //
+        try {
+            $image = ProductGallery::findOrFail($id);
+            $this->removeImage($image->image);
+            $image->delete();
+
+            return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        } catch (\Throwable $th) {
+            return response(['status' => 'error', 'message' => 'something went wrong!']);
+        }
     }
 }

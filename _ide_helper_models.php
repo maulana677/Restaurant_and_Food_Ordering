@@ -59,6 +59,8 @@ namespace App\Models{
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductGallery> $productImages
  * @property-read int|null $product_images_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductSize> $productSizes
+ * @property-read int|null $product_sizes_count
  * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
@@ -88,11 +90,32 @@ namespace App\Models{
 /**
  * App\Models\ProductGallery
  *
+ * @property int $id
+ * @property int $product_id
+ * @property string $image
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductGallery whereUpdatedAt($value)
  */
 	class ProductGallery extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ProductSize
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductSize newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductSize newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductSize query()
+ */
+	class ProductSize extends \Eloquent {}
 }
 
 namespace App\Models{
