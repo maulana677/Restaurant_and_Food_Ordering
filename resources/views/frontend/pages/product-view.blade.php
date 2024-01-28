@@ -154,58 +154,7 @@
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0">
                                 <div class="menu_det_description">
-                                    <p>Ipsum dolor, sit amet consectetur adipisicing elit. Doloribus consectetur
-                                        ullam in? Beatae, dolorum ad ea deleniti ratione voluptatum similique omnis
-                                        voluptas tempora optio soluta vero veritatis reiciendis blanditiis architecto.
-                                        Debitis nesciunt inventore voluptate tempora ea incidunt iste, corporis, quo
-                                        cumque facere doloribus possimus nostrum sed magni quasi, assumenda autem!
-                                        Repudiandae nihil magnam provident illo alias vero odit repellendus, ipsa nemo
-                                        itaque. Aperiam fuga, magnam quia illum minima blanditiis tempore. vero
-                                        veritatis reiciendis blanditiis architecto. Debitis nesciunt inventore voluptate
-                                        tempora ea incidunt iste, corporis, quo cumque facere doloribus possimus nostrum
-                                        sed magni quasi</p>
-                                    <ul>
-                                        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-                                            consectetur ullam in</li>
-                                        <li>Dolor sit amet consectetur adipisicing elit. Earum itaque nesciunt.</li>
-                                        <li>Corporis, quo cumque facere doloribus possimus nostrum sed magni quasi.</li>
-                                        <li>Reiciendis blanditiis architecto. Debitis nesciunt inventore voluptate
-                                            tempora ea.</li>
-                                        <li>Incidunt iste, corporis, quo cumque facere doloribus possimus
-                                            nostrum sed magni quasi</li>
-                                        <li>Architecto. Debitis nesciunt inventore voluptate tempora ea incidunt iste
-                                            corporis.</li>
-                                        <li>Earum itaque nesciunt dolor laudantium placeat sed velit aspernatur.</li>
-                                        <li>Laudantium placeat sed velit aspernatur, nobis quos quibusdam distinctio
-                                            voluptatum.</li>
-                                    </ul>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum itaque nesciunt
-                                        dolor laudantium placeat sed velit aspernatur, nobis quos quibusdam distinctio
-                                        voluptatum officia vel sapiente enim, reprehenderit impedit beatae molestias
-                                        dolorum. A laborum consectetur sed quis exercitationem optio consequatur, unde
-                                        neque est odit, pariatur quae incidunt quasi dolorem nihil aliquid ut veritatis
-                                        porro eaque cupiditate voluptatem vel ad! Asperiores, praesentium. sit amet
-                                        consectetur adipisicing elit. Doloribus consectetur ullam in? Beatae, dolorum ad
-                                        ea deleniti ratione voluptatum similique omnis voluptas tempora optio soluta</p>
-
-                                    <ul>
-                                        <li>Reiciendis blanditiis architecto. Debitis nesciunt inventore voluptate
-                                            tempora ea.</li>
-                                        <li>Incidunt iste, corporis, quo cumque facere doloribus possimus
-                                            nostrum sed magni quasi</li>
-                                        <li>Architecto. Debitis nesciunt inventore voluptate tempora ea incidunt iste
-                                            corporis.</li>
-                                        <li>Earum itaque nesciunt dolor laudantium placeat sed velit aspernatur.</li>
-                                        <li>Laudantium placeat sed velit aspernatur, nobis quos quibusdam distinctio
-                                            voluptatum.</li>
-                                    </ul>
-                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus consectetur
-                                        ullam in? Beatae, dolorum ad ea deleniti ratione voluptatum similique omnis
-                                        voluptas tempora optio soluta vero veritatis reiciendis blanditiis architecto.
-                                        Debitis nesciunt inventore voluptate tempora ea incidunt iste, corporis, quo
-                                        cumque facere doloribus possimus nostrum sed magni quasi, assumenda autem!
-                                        Repudiandae nihil magnam provident illo alias vero odit repellendus, ipsa nemo
-                                        itaque. Aperiam fuga, magnam quia illum minima blanditiis tempore.</p>
+                                    {!! $product->long_description !!}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-contact" role="tabpanel"
@@ -324,49 +273,52 @@
                     </div>
                 </div>
             </div>
-            <div class="fp__related_menu mt_90 xs_mt_60">
-                <h2>related item</h2>
-                <div class="row related_product_slider">
-                    @foreach ($relatedProducts as $relatedProduct)
-                        <div class="col-xl-3 wow fadeInUp" data-wow-duration="1s">
-                            <div class="fp__menu_item">
-                                <div class="fp__menu_item_img">
-                                    <img src="{{ asset($relatedProduct->thumb_image) }}"
-                                        alt="{{ $relatedProduct->name }}" class="img-fluid w-100">
-                                    <a class="category" href="#">{{ @$relatedProduct->category->name }}</a>
-                                </div>
-                                <div class="fp__menu_item_text">
-                                    <p class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
-                                        <span>74</span>
-                                    </p>
-                                    <a class="title"
-                                        href="{{ route('product.show', $relatedProduct->slug) }}">{!! $relatedProduct->name !!}</a>
-                                    <h5 class="price">
-                                        @if ($relatedProduct->offer_price > 0)
-                                            {{ currency_IDR($relatedProduct->offer_price) }}
-                                            <del>{{ currency_IDR($relatedProduct->price) }}</del>
-                                        @else
-                                            {{ currency_IDR($relatedProduct->price) }}
-                                        @endif
-                                    </h5>
-                                    <ul class="d-flex flex-wrap justify-content-center">
-                                        <li><a href="javascript:;"
-                                                onclick="loadProductModal('{{ $relatedProduct->id }}')"><i
-                                                    class="fas fa-shopping-basket"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="far fa-eye"></i></a></li>
-                                    </ul>
+
+            @if (count($relatedProducts) > 0)
+                <div class="fp__related_menu mt_90 xs_mt_60">
+                    <h2>related item</h2>
+                    <div class="row related_product_slider">
+                        @foreach ($relatedProducts as $relatedProduct)
+                            <div class="col-xl-3 wow fadeInUp" data-wow-duration="1s">
+                                <div class="fp__menu_item">
+                                    <div class="fp__menu_item_img">
+                                        <img src="{{ asset($relatedProduct->thumb_image) }}"
+                                            alt="{{ $relatedProduct->name }}" class="img-fluid w-100">
+                                        <a class="category" href="#">{{ @$relatedProduct->category->name }}</a>
+                                    </div>
+                                    <div class="fp__menu_item_text">
+                                        <p class="rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
+                                            <span>74</span>
+                                        </p>
+                                        <a class="title"
+                                            href="{{ route('product.show', $relatedProduct->slug) }}">{!! $relatedProduct->name !!}</a>
+                                        <h5 class="price">
+                                            @if ($relatedProduct->offer_price > 0)
+                                                {{ currency_IDR($relatedProduct->offer_price) }}
+                                                <del>{{ currency_IDR($relatedProduct->price) }}</del>
+                                            @else
+                                                {{ currency_IDR($relatedProduct->price) }}
+                                            @endif
+                                        </h5>
+                                        <ul class="d-flex flex-wrap justify-content-center">
+                                            <li><a href="javascript:;"
+                                                    onclick="loadProductModal('{{ $relatedProduct->id }}')"><i
+                                                        class="fas fa-shopping-basket"></i></a></li>
+                                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="far fa-eye"></i></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
 

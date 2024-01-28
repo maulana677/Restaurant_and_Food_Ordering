@@ -83,8 +83,11 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ setSidebarActive(['admin.setting.index']) }}"><a class="nav-link"
+                    href="{{ route('admin.setting.index') }}"><i class="fas fa-cogs"></i>
+                    <span>Settings</span></a>
+            </li>
         </ul>
-        </li>
         {{--  <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
