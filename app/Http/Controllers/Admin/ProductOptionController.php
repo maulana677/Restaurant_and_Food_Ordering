@@ -3,26 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Models\ProductOption;
-use App\Models\ProductSize;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
 
-class ProductSizeController extends Controller
+class ProductOptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(string $productId): View
-    {
-        $product = Product::findOrFail($productId);
-        $sizes = ProductSize::where('product_id', $product->id)->get();
-        $options = ProductOption::where('product_id', $product->id)->get();
-        return view('admin.product.product-size.index', compact('product', 'sizes', 'options'));
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,13 +20,18 @@ class ProductSizeController extends Controller
             'name' => ['required', 'max:255'],
             'price' => ['required', 'numeric'],
             'product_id' => ['required', 'integer']
+        ], [
+            'name.required' => 'Product option name is required',
+            'name.max' => 'Product option max length is 255',
+            'price.required' => 'Product option price is required',
+            'price.numeric' => 'Product option price have to be a number',
         ]);
 
-        $size = new ProductSize();
-        $size->product_id = $request->product_id;
-        $size->name = $request->name;
-        $size->price = $request->price;
-        $size->save();
+        $option = new ProductOption();
+        $option->product_id = $request->product_id;
+        $option->name = $request->name;
+        $option->price = $request->price;
+        $option->save();
 
         toastr()->success('Created Successfully!');
 
@@ -52,7 +44,7 @@ class ProductSizeController extends Controller
     public function destroy(string $id): Response
     {
         try {
-            $image = ProductSize::findOrFail($id);
+            $image = ProductOption::findOrFail($id);
             $image->delete();
 
             return response(['status' => 'success', 'message' => 'Deleted Successfully!']);

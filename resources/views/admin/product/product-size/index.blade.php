@@ -86,15 +86,15 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.product-option.store') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Name</label>
                                         <input type="text" name="name" id="" class="form-control">
-                                        <input type="hidden" value="" name="product_id">
+                                        <input type="hidden" value="{{ $product->id }}" name="product_id">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -125,11 +125,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{--  @foreach ($options as $option)
+                                @foreach ($options as $option)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
                                         <td>{{ $option->name }}</td>
-                                        <td>{{ currencyPosition($option->price) }}</td>
+                                        <td>{{ currency_IDR($option->price) }}</td>
                                         <td>
                                             <a href='{{ route('admin.product-option.destroy', $option->id) }}'
                                                 class='btn btn-danger delete-item mx-2'><i class='fas fa-trash'></i></a>
@@ -141,7 +141,7 @@
                                         <td colspan='3' class="text-center">No data found!</td>
 
                                     </tr>
-                                @endif  --}}
+                                @endif
                             </tbody>
                         </table>
                     </div>
