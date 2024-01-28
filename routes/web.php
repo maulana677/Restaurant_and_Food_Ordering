@@ -31,9 +31,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
 });
 
+require __DIR__ . '/auth.php';
+
+/** show home page */
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 
-
-require __DIR__ . '/auth.php';
+/** show product detail page */
+Route::get('/product/{slug}', [FrontendController::class, 'showProduct'])->name('product.show');
 
 // Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->middleware('auth', 'role:admin')->name('admin.dashboard');

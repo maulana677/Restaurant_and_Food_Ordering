@@ -53,7 +53,8 @@
                                     <i class="far fa-star"></i>
                                     <span>145</span>
                                 </p>
-                                <a class="title" href="#">{{ $product->name }}</a>
+                                <a class="title"
+                                    href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
                                 <h5 class="price">
                                     @if ($product->offer_price > 0)
                                         {{ currency_IDR($product->offer_price) }}
