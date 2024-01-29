@@ -45,17 +45,6 @@
 
                             @include('admin.setting.sections.general-setting')
 
-                            @include('admin.setting.sections.logo-setting')
-
-                            @include('admin.setting.sections.appearance-setting')
-
-                            @include('admin.setting.sections.pusher-setting')
-
-                            @include('admin.setting.sections.mail-setting')
-
-                            @include('admin.setting.sections.seo-setting')
-
-
                         </div>
                     </div>
                 </div>
