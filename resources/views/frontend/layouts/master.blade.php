@@ -135,6 +135,9 @@
             }
         });
     </script>
+
+    @include('frontend.layouts.global-scripts')
+
     @stack('scripts')
 </body>
 
