@@ -51,4 +51,11 @@ class FrontendController extends Controller
             ->latest()->get();
         return view('frontend.pages.product-view', compact('product', 'relatedProducts'));
     }
+
+    function loadProductModal($productId)
+    {
+        $product = Product::with(['productSizes', 'productOptions'])->findOrFail($productId);
+
+        return view('frontend.layouts.ajax-files.product-popup-modal', compact('product'))->render();
+    }
 }
