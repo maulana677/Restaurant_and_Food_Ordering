@@ -31,6 +31,9 @@ class SettingController extends Controller
             );
         }
 
+        $settingsService = app(SettingsService::class);
+        $settingsService->clearCachedSettings();
+
         toastr()->success('Updated Successfully!');
         return redirect()->back();
     }
