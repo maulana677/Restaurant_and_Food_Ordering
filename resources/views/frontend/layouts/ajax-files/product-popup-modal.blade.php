@@ -19,12 +19,12 @@
             @if ($product->offer_price > 0)
                 <input type="hidden" name="base_price" value="{{ $product->offer_price }}">
 
-                {{ currency_IDR($product->offer_price) }}
-                <del>{{ currency_IDR($product->price) }}</del>
+                {{ currencyPosition($product->offer_price) }}
+                <del>{{ currencyPosition($product->price) }}</del>
             @else
                 <input type="hidden" name="base_price" value="{{ $product->price }}">
 
-                {{ currency_IDR($product->price) }}
+                {{ currencyPosition($product->price) }}
             @endif
         </h4>
 
@@ -37,7 +37,7 @@
                             data-price="{{ $productSize->price }}" name="product_size"
                             id="size-{{ $productSize->id }}">
                         <label class="form-check-label" for="size-{{ $productSize->id }}">
-                            {{ $productSize->name }} <span>+ {{ currency_IDR($productSize->price) }}</span>
+                            {{ $productSize->name }} <span>+ {{ currencyPosition($productSize->price) }}</span>
                         </label>
                     </div>
                 @endforeach
@@ -64,11 +64,15 @@
             <h5>select quentity</h5>
             <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
                 <div class="quentity_btn">
-                    <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                    <input type="text" placeholder="1">
-                    <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                    <button class="btn btn-danger decrement"><i class="fal fa-minus"></i></button>
+                    <input type="text" id="quantity" name="quantity" placeholder="1" value="1" readonly>
+                    <button class="btn btn-success increment"><i class="fal fa-plus"></i></button>
                 </div>
-                <h3>$320.00</h3>
+                @if ($product->offer_price > 0)
+                    <h3 id="total_price">{{ currencyPosition($product->offer_price) }}</h3>
+                @else
+                    <h3 id="total_price">{{ currencyPosition($product->price) }}</h3>
+                @endif
             </div>
         </div>
         <ul class="details_button_area d-flex flex-wrap">
@@ -83,18 +87,32 @@
             updateTotalPrice();
         });
 
+        $('input[name="product_option[]"]').on('change', function() {
+            updateTotalPrice();
+        });
+
         // function update
         function updateTotalPrice() {
             let basePrice = parseFloat($('input[name="base_price"]').val());
             let selectedSizePrice = 0;
             let selectedOptionsPrice = 0;
 
-            // total size price
+
+            // calculate the selected size price
             let selectedSize = $('input[name="product_size"]:checked');
             if (selectedSize.length > 0) {
                 selectedSizePrice = parseFloat(selectedSize.data("price"));
             }
-            alert(selectedSizePrice);
+
+            // calculate the selected options price
+            let selectedOptions = $('input[name="product_option[]"]:checked');
+            $(selectedOptions).each(function() {
+                selectedOptionsPrice += parseFloat($(this).data("price"));
+            })
+
+            // Calculate the total price
+            let totalPrice = basePrice + selectedSizePrice + selectedOptionsPrice;
+            $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
         }
     })
 </script>

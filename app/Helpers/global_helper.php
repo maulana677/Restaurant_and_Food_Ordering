@@ -21,13 +21,13 @@ if (!function_exists('generateUniqueSlug')) {
     }
 }
 
-if (!function_exists('currency_IDR')) {
-    function currency_IDR($price): string
+if (!function_exists('currencyPosition')) {
+    function currencyPosition($price): string
     {
-        if ("Rp. " . number_format($price, 0, ',', '.')) {
-            return "Rp. " . number_format($price, 0, ',', '.');
+        if (config('settings.site_currency_icon_position') === 'left') {
+            return config('settings.site_currency_icon') . $price;
         } else {
-            return $price . "Rp. " . number_format($price, 0, ',', '.');
+            return $price . config('settings.site_currency_icon');
         }
     }
 }

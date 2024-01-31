@@ -59,10 +59,10 @@
                         </p>
                         <h3 class="price">
                             @if ($product->offer_price > 0)
-                                {{ currency_IDR($product->offer_price) }}
-                                <del>{{ currency_IDR($product->price) }}</del>
+                                {{ currencyPosition($product->offer_price) }}
+                                <del>{{ currencyPosition($product->price) }}</del>
                             @else
-                                {{ currency_IDR($product->price) }}
+                                {{ currencyPosition($product->price) }}
                             @endif
                         </h3>
                         <p class="short_description">{!! $product->short_description !!}</p>
@@ -84,7 +84,7 @@
                                                 data-price="{{ $productSize->price }}" value="{{ $productSize->id }}">
                                             <label class="form-check-label" for="size-{{ $productSize->id }}">
                                                 {{ $productSize->name }} <span>+
-                                                    {{ currency_IDR($productSize->price) }}</span>
+                                                    {{ currencyPosition($productSize->price) }}</span>
                                             </label>
                                         </div>
                                     @endforeach
@@ -103,7 +103,7 @@
                                                 data-price="{{ $productOption->price }}">
                                             <label class="form-check-label" for="option-{{ $productOption->id }}">
                                                 {{ $productOption->name }} <span>+
-                                                    {{ currency_IDR($productOption->price) }}</span>
+                                                    {{ currencyPosition($productOption->price) }}</span>
                                             </label>
                                         </div>
                                     @endforeach
@@ -120,7 +120,7 @@
                                         <button class="btn btn-success v_increment"><i class="fal fa-plus"></i></button>
                                     </div>
                                     <h3 id="v_total_price">
-                                        {{ $product->offer_price > 0 ? currency_IDR($product->offer_price) : currency_IDR($product->price) }}
+                                        {{ $product->offer_price > 0 ? currencyPosition($product->offer_price) : currencyPosition($product->price) }}
                                     </h3>
                                 </div>
                             </div>
@@ -299,10 +299,10 @@
                                             href="{{ route('product.show', $relatedProduct->slug) }}">{!! $relatedProduct->name !!}</a>
                                         <h5 class="price">
                                             @if ($relatedProduct->offer_price > 0)
-                                                {{ currency_IDR($relatedProduct->offer_price) }}
-                                                <del>{{ currency_IDR($relatedProduct->price) }}</del>
+                                                {{ currencyPosition($relatedProduct->offer_price) }}
+                                                <del>{{ currencyPosition($relatedProduct->price) }}</del>
                                             @else
-                                                {{ currency_IDR($relatedProduct->price) }}
+                                                {{ currencyPosition($relatedProduct->price) }}
                                             @endif
                                         </h5>
                                         <ul class="d-flex flex-wrap justify-content-center">
