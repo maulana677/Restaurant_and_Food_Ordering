@@ -91,12 +91,33 @@
             updateTotalPrice();
         });
 
+        // Event handlers for increment and decrement buttons
+        $('.increment').on('click', function(e) {
+            e.preventDefault()
+
+            let quantity = $('#quantity');
+            let currentQuantity = parseFloat(quantity.val());
+            quantity.val(currentQuantity + 1);
+            updateTotalPrice()
+        })
+
+        $('.decrement').on('click', function(e) {
+            e.preventDefault()
+
+            let quantity = $('#quantity');
+            let currentQuantity = parseFloat(quantity.val());
+            if (currentQuantity > 1) {
+                quantity.val(currentQuantity - 1);
+                updateTotalPrice()
+            }
+        })
+
         // function update
         function updateTotalPrice() {
             let basePrice = parseFloat($('input[name="base_price"]').val());
             let selectedSizePrice = 0;
             let selectedOptionsPrice = 0;
-
+            let quantity = parseFloat($('#quantity').val());
 
             // calculate the selected size price
             let selectedSize = $('input[name="product_size"]:checked');
@@ -111,7 +132,7 @@
             })
 
             // Calculate the total price
-            let totalPrice = basePrice + selectedSizePrice + selectedOptionsPrice;
+            let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice) * quantity;
             $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
         }
     })
