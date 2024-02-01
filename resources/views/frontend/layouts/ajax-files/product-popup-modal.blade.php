@@ -76,7 +76,7 @@
             </div>
         </div>
         <ul class="details_button_area d-flex flex-wrap">
-            <li><a class="common_btn" href="#">add to cart</a></li>
+            <li><button type="submit" class="common_btn">add to cart</button></li>
         </ul>
     </div>
 </form>
@@ -135,5 +135,22 @@
             let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice) * quantity;
             $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
         }
+
+        // add to cart function
+        $("#modal_add_to_cart").on('submit', function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('add-to-cart') }}',
+                data: formData,
+                success: function(response) {
+
+                },
+                error: function(xhr, status, error) {
+                    console.eror(error);
+                }
+            })
+        })
     })
 </script>
