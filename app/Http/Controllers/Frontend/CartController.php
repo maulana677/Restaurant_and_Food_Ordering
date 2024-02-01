@@ -18,17 +18,21 @@ class CartController extends Controller
         $productOptions = $product->productOptions->whereIn('id', $request->product_option);
 
         $options = [
-            'product_size' => [
-                'id' => $productSize->id,
-                'name' => $productSize->name,
-                'price' => $productSize->price,
-            ],
+            'product_size' => [],
             'product_options' => [],
             'product_info' => [
                 'image' => $product->thumb_image,
                 'slug' => $product->slug
             ]
         ];
+
+        if ($productSize !== null) {
+            $options['product_size'] = [
+                'id' => $productSize?->id,
+                'name' => $productSize?->name,
+                'price' => $productSize?->price
+            ];
+        }
 
         foreach ($productOptions as $option) {
             $options['product_options'][] = [
