@@ -76,7 +76,11 @@
             </div>
         </div>
         <ul class="details_button_area d-flex flex-wrap">
-            <li><button type="submit" class="common_btn">add to cart</button></li>
+            @if ($product->quantity === 0)
+                <li><button type="button" class="common_btn bg-danger">Stock Out</button></li>
+            @else
+                <li><button type="submit" class="common_btn modal_cart_button">add to cart</button></li>
+            @endif
         </ul>
     </div>
 </form>
@@ -112,20 +116,20 @@
             }
         })
 
-        // function update
+        // Function to update the total price base on seelected options
         function updateTotalPrice() {
             let basePrice = parseFloat($('input[name="base_price"]').val());
             let selectedSizePrice = 0;
             let selectedOptionsPrice = 0;
             let quantity = parseFloat($('#quantity').val());
 
-            // calculate the selected size price
+            // Calculate the selected size price
             let selectedSize = $('input[name="product_size"]:checked');
             if (selectedSize.length > 0) {
                 selectedSizePrice = parseFloat(selectedSize.data("price"));
             }
 
-            // calculate the selected options price
+            // Calculate selected options price
             let selectedOptions = $('input[name="product_option[]"]:checked');
             $(selectedOptions).each(function() {
                 selectedOptionsPrice += parseFloat($(this).data("price"));
@@ -136,8 +140,8 @@
             $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
         }
 
-        // add to cart function
-        $("#modal_add_to_cart").on('submit', function(e) {
+        // Add to cart function
+        $("#modal_add_to_cart_form").on('submit', function(e) {
             e.preventDefault();
 
             // Validation
@@ -155,11 +159,22 @@
                 method: 'POST',
                 url: '{{ route('add-to-cart') }}',
                 data: formData,
+                beforeSend: function() {
+                    $('.modal_cart_button').attr('disabled', true);
+                    $('.modal_cart_button').html(
+                        '<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span> Loading...'
+                    )
+                },
                 success: function(response) {
-
+                    toastr.success(response.message);
                 },
                 error: function(xhr, status, error) {
-                    console.eror(error);
+                    let errorMessage = xhr.responseJSON.message;
+                    toastr.error(errorMessage);
+                },
+                complete: function() {
+                    $('.modal_cart_button').html('Add to Cart');
+                    $('.modal_cart_button').attr('disabled', false);
                 }
             })
         })
