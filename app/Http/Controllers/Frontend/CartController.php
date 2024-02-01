@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -22,7 +23,11 @@ class CartController extends Controller
                 'name' => $productSize->name,
                 'price' => $productSize->price,
             ],
-            'product_options' => []
+            'product_options' => [],
+            'product_info' => [
+                'image' => $product->thumb_image,
+                'slug' => $product->slug
+            ]
         ];
 
         foreach ($productOptions as $option) {
@@ -32,5 +37,16 @@ class CartController extends Controller
                 'price' => $option->price,
             ];
         }
+
+        Cart::add([
+            'id' => $product->id,
+            'name' => $product->name,
+            'qty' => $request->quantity,
+            'price' => $product->offer_price > 0 ? $product->offer_price : $product->price,
+            'weight' => 0,
+            'options' => $options
+        ]);
+
+        return response(['status' => 'success', 'message' => 'Product added into cart!'], 200);
     }
 }
