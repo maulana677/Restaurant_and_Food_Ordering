@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -60,5 +62,10 @@ class CartController extends Controller
             logger($e);
             return response(['status' => 'error', 'message' => 'Something went wrong!'], 500);
         }
+    }
+
+    function getCartProduct()
+    {
+        return view('frontend.layouts.ajax-files.sidebar-cart-item')->render();
     }
 }

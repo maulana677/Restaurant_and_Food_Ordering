@@ -45,4 +45,4 @@ Route::get('/load-product-modal/{productId}', [FrontendController::class, 'loadP
 
 /** Product Modal Route */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
-// Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->middleware('auth', 'role:admin')->name('admin.dashboard');
+Route::get('get-cart-products', [CartController::class, 'getCartProduct'])->name('get-cart-products');
