@@ -414,6 +414,10 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $('.v_product_size').prop('checked', false);
+            $('.v_product_option').prop('checked', false);
+            $('#v_quantity').val(1);
+
             $('.v_product_size').on('change', function() {
                 v_updateTotalPrice();
             });
@@ -422,11 +426,32 @@
                 v_updateTotalPrice();
             });
 
+            // Event handlers for increment and decrement buttons
+            $('.v_increment').on('click', function(e) {
+                e.preventDefault()
+
+                let quantity = $('#v_quantity');
+                let currentQuantity = parseFloat(quantity.val());
+                quantity.val(currentQuantity + 1);
+                v_updateTotalPrice()
+            })
+
+            $('.v_decrement').on('click', function(e) {
+                e.preventDefault()
+
+                let quantity = $('#v_quantity');
+                let currentQuantity = parseFloat(quantity.val());
+                if (currentQuantity > 1) {
+                    quantity.val(currentQuantity - 1);
+                    v_updateTotalPrice()
+                }
+            })
+
             function v_updateTotalPrice() {
                 let basePrice = parseFloat($('.v_base_price').val());
                 let selectedSizePrice = 0;
                 let selectedOptionsPrice = 0;
-                let quantity = parseFloat($('#quantity').val());
+                let quantity = parseFloat($('#v_quantity').val());
 
                 // Calculate the selected size price
                 let selectedSize = $('.v_product_size:checked');
@@ -441,7 +466,7 @@
                 })
 
                 // Calculate the total price
-                let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice);
+                let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice) * quantity;
                 $('#v_total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
             }
         })
