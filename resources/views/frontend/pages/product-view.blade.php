@@ -469,6 +469,51 @@
                 let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice) * quantity;
                 $('#v_total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
             }
+
+            $('.v_submit_button').on('click', function(e) {
+                e.preventDefault();
+                $("#v_add_to_cart_form").submit();
+            })
+
+            // Add to cart function
+            $("#v_add_to_cart_form").on('submit', function(e) {
+                e.preventDefault();
+
+                // Validation
+                let selectedSize = $(".v_product_size");
+                if (selectedSize.length > 0) {
+                    if ($(".v_product_size:checked").val() === undefined) {
+                        toastr.error('Please select a size');
+                        console.error('Please select a size');
+                        return;
+                    }
+                }
+
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('add-to-cart') }}',
+                    data: formData,
+                    beforeSend: function() {
+                        $('.v_submit_button').attr('disabled', true);
+                        $('.v_submit_button').html(
+                            '<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span> Loading...'
+                        )
+                    },
+                    success: function(response) {
+                        updateSidebarCart();
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = xhr.responseJSON.message;
+                        toastr.error(errorMessage);
+                    },
+                    complete: function() {
+                        $('.v_submit_button').html('Add to Cart');
+                        $('.v_submit_button').attr('disabled', false);
+                    }
+                })
+            })
         })
     </script>
 @endpush
