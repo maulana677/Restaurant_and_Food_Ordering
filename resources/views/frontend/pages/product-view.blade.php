@@ -410,3 +410,40 @@
 
     <!--============================= MENU DETAILS END ==============================-->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.v_product_size').on('change', function() {
+                v_updateTotalPrice();
+            });
+
+            $('.v_product_option').on('change', function() {
+                v_updateTotalPrice();
+            });
+
+            function v_updateTotalPrice() {
+                let basePrice = parseFloat($('.v_base_price').val());
+                let selectedSizePrice = 0;
+                let selectedOptionsPrice = 0;
+                let quantity = parseFloat($('#quantity').val());
+
+                // Calculate the selected size price
+                let selectedSize = $('.v_product_size:checked');
+                if (selectedSize.length > 0) {
+                    selectedSizePrice = parseFloat(selectedSize.data("price"));
+                }
+
+                // Calculate selected options price
+                let selectedOptions = $('input[name="product_option[]"]:checked');
+                $(selectedOptions).each(function() {
+                    selectedOptionsPrice += parseFloat($(this).data("price"));
+                })
+
+                // Calculate the total price
+                let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice);
+                $('#v_total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
+            }
+        })
+    </script>
+@endpush
