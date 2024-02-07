@@ -94,10 +94,10 @@ class CartController extends Controller
     {
         try {
             Cart::update($request->rowId, $request->qty);
-            return response(['status' => 'success', 'message' => 'Updated cart successfully!']);
+            return response(['status' => 'success', 'message' => 'Updated cart successfully!'], 200);
         } catch (\Exception $e) {
             logger($e);
-            return response(['status' => 'error', 'message' => 'Something went wrong!']);
+            return response(['status' => 'error', 'message' => 'Something went wrong please reload the page.'], 500);
         }
     }
 }
