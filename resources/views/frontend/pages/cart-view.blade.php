@@ -64,8 +64,8 @@
                                                     href="{{ route('product.show', $product->options->product_info['slug']) }}">{{ $product->name }}
                                                 </a>
                                                 <span>
-                                                    {{ $product->options->product_size['name'] }}
-                                                    ({{ currencyPosition($product->options->product_size['price']) }})
+                                                    {{ @$product->options->product_size['name'] }}
+                                                    {{ @$product->options->product_size['price'] ? '(' . currencyPosition(@$product->options->product_size['price']) . ')' : '' }}
                                                 </span>
                                                 @foreach ($product->options->product_options as $option)
                                                     <p>{{ $option['name'] }} ({{ currencyPosition($option['price']) }})</p>
@@ -80,8 +80,8 @@
                                                 <div class="quentity_btn">
                                                     <button class="btn btn-danger decrement"><i
                                                             class="fal fa-minus"></i></button>
-                                                    <input type="text" class="quantity" placeholder="1"
-                                                        value="{{ $product->qty }}" readonly>
+                                                    <input type="text" class="quantity" data-id="{{ $product->rowId }}"
+                                                        placeholder="1" value="{{ $product->qty }}" readonly>
                                                     <button class="btn btn-success increment"><i
                                                             class="fal fa-plus"></i></button>
                                                 </div>
@@ -127,16 +127,45 @@
             $('.increment').on('click', function() {
                 let inputField = $(this).siblings('.quantity');
                 let currentValue = parseInt(inputField.val());
+                let rowId = inputField.data("id");
                 inputField.val(currentValue + 1);
+
+                cartQtyUpdate(rowId, inputField.val());
             });
 
             $('.decrement').on('click', function() {
                 let inputField = $(this).siblings('.quantity');
                 let currentValue = parseInt(inputField.val());
+                let rowId = inputField.data("id");
+
                 if (inputField.val() > 1) {
                     inputField.val(currentValue - 1);
+                    cartQtyUpdate(rowId, inputField.val());
                 }
             });
+
+            function cartQtyUpdate(rowId, qty) {
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('cart.quantity-update') }}',
+                    data: {
+                        'rowId': rowId,
+                        'qty': qty
+                    },
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+
+                    },
+                    error: function(xhr, status, error) {
+
+                    },
+                    complete: function() {
+
+                    }
+                })
+            }
         })
     </script>
 @endpush
