@@ -49,7 +49,7 @@
                                         </th>
 
                                         <th class="fp__pro_icon">
-                                            <a class="clear_all" href="#">clear all</a>
+                                            <a class="clear_all" href="{{ route('cart.destroy') }}">clear all</a>
                                         </th>
                                     </tr>
                                     @foreach (Cart::content() as $product)
@@ -88,14 +88,22 @@
                                             </td>
 
                                             <td class="fp__pro_tk">
-                                                <h6>$180,00</h6>
+                                                <h6 class="produt_cart_total">
+                                                    {{ currencyPosition(productTotal($product->rowId)) }}</h6>
                                             </td>
 
                                             <td class="fp__pro_icon">
-                                                <a href="#"><i class="far fa-times"></i></a>
+                                                <a href="#" class="reomove_cart_product"
+                                                    data-id="{{ $product->rowId }}"><i class="far fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @if (Cart::content()->count() === 0)
+                                        <tr>
+                                            <td colspan="6" class="text-center fp__pro_name"
+                                                style="width: 100%;display: inline;">Cart is empty!</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -124,27 +132,43 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
             $('.increment').on('click', function() {
-                let inputField = $(this).siblings('.quantity');
+                let inputField = $(this).siblings(".quantity");
                 let currentValue = parseInt(inputField.val());
                 let rowId = inputField.data("id");
+
                 inputField.val(currentValue + 1);
 
-                cartQtyUpdate(rowId, inputField.val());
+                cartQtyUpdate(rowId, inputField.val(), function(response) {
+                    let productTotal = response.product_total;
+                    inputField.closest("tr")
+                        .find(".produt_cart_total")
+                        .text("{{ currencyPosition(':productTotal') }}"
+                            .replace(":productTotal", productTotal));
+                });
             });
 
             $('.decrement').on('click', function() {
-                let inputField = $(this).siblings('.quantity');
+                let inputField = $(this).siblings(".quantity");
                 let currentValue = parseInt(inputField.val());
                 let rowId = inputField.data("id");
 
+                inputField.val(currentValue - 1);
+
                 if (inputField.val() > 1) {
-                    inputField.val(currentValue - 1);
-                    cartQtyUpdate(rowId, inputField.val());
+
+                    cartQtyUpdate(rowId, inputField.val(), function(response) {
+                        let productTotal = response.product_total;
+                        inputField.closest("tr")
+                            .find(".produt_cart_total")
+                            .text("{{ currencyPosition(':productTotal') }}"
+                                .replace(":productTotal", productTotal));
+                    });
                 }
             });
 
-            function cartQtyUpdate(rowId, qty) {
+            function cartQtyUpdate(rowId, qty, callback) {
                 $.ajax({
                     method: 'POST',
                     url: '{{ route('cart.quantity-update') }}',
@@ -155,7 +179,43 @@
                     beforeSend: function() {
                         showLoader();
                     },
-                    success: function(response) {},
+                    success: function(response) {
+                        if (callback && typeof callback === 'function') {
+                            callback(response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = xhr.responseJSON.message;
+                        hideLoader();
+                        toastr.error(errorMessage);
+                    },
+                    complete: function() {
+                        hideLoader();
+                    }
+                })
+            }
+
+            $('.reomove_cart_product').on('click', function(e) {
+                e.preventDefault();
+                let rowId = $(this).data('id');
+                removeCartProduct(rowId);
+                $(this).closest('tr').remove();
+            })
+
+            function removeCartProduct(rowId) {
+                $.ajax({
+                    method: 'get',
+                    url: '{{ route('cart-product-remove', ':rowId') }}'.replace(":rowId", rowId),
+                    beforeSend: function() {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        updateSidebarCart();
+                        cartTotal = response.cart_total;
+                        $('#subtotal').text("{{ config('settings.site_currency_icon') }}" + cartTotal);
+                        $("#final_total").text("{{ config('settings.site_currency_icon') }}" + response
+                            .grand_cart_total)
+                    },
                     error: function(xhr, status, error) {
                         let errorMessage = xhr.responseJSON.message;
                         hideLoader();
