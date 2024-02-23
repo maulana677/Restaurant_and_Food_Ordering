@@ -141,11 +141,26 @@
                 inputField.val(currentValue + 1);
 
                 cartQtyUpdate(rowId, inputField.val(), function(response) {
-                    let productTotal = response.product_total;
-                    inputField.closest("tr")
-                        .find(".produt_cart_total")
-                        .text("{{ currencyPosition(':productTotal') }}"
-                            .replace(":productTotal", productTotal));
+                    if (response.status === 'success') {
+                        inputField.val(response.qty);
+
+                        let productTotal = response.product_total;
+                        inputField.closest("tr")
+                            .find(".produt_cart_total")
+                            .text("{{ currencyPosition(':productTotal') }}"
+                                .replace(":productTotal", productTotal));
+
+                        cartTotal = response.cart_total;
+                        $('#subtotal').text("{{ config('settings.site_currency_icon') }}" +
+                            cartTotal);
+
+                        $("#final_total").text("{{ config('settings.site_currency_icon') }}" +
+                            response.grand_cart_total)
+
+                    } else if (response.status === 'error') {
+                        inputField.val(response.qty);
+                        toastr.error(response.message);
+                    }
                 });
             });
 
@@ -159,11 +174,26 @@
                 if (inputField.val() > 1) {
 
                     cartQtyUpdate(rowId, inputField.val(), function(response) {
-                        let productTotal = response.product_total;
-                        inputField.closest("tr")
-                            .find(".produt_cart_total")
-                            .text("{{ currencyPosition(':productTotal') }}"
-                                .replace(":productTotal", productTotal));
+                        if (response.status === 'success') {
+                            inputField.val(response.qty);
+
+                            let productTotal = response.product_total;
+                            inputField.closest("tr")
+                                .find(".produt_cart_total")
+                                .text("{{ currencyPosition(':productTotal') }}"
+                                    .replace(":productTotal", productTotal));
+
+                            cartTotal = response.cart_total;
+                            $('#subtotal').text("{{ config('settings.site_currency_icon') }}" +
+                                cartTotal);
+                            $("#final_total").text("{{ config('settings.site_currency_icon') }}" +
+                                response.grand_cart_total)
+
+                        } else if (response.error === 'error') {
+                            inputField.val(response.qty);
+                            toastr.error(response.message);
+                        }
+
                     });
                 }
             });

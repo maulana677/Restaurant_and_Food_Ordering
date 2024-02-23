@@ -83,6 +83,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="dropdown {{ setSidebarActive(['admin.coupon.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-store"></i>
+                    <span>Manage Ecommerce </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setSidebarActive(['admin.coupon.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.coupon.index') }}">Coupon</a>
+                    </li>
+                </ul>
+            </li>
             <li class="{{ setSidebarActive(['admin.setting.index']) }}"><a class="nav-link"
                     href="{{ route('admin.setting.index') }}"><i class="fas fa-cogs"></i>
                     <span>Settings</span></a>
