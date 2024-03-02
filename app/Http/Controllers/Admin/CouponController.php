@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\CouponDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CouponCreateRequest;
+use App\Models\Coupon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -32,6 +33,18 @@ class CouponController extends Controller
      */
     public function store(CouponCreateRequest $request): RedirectResponse
     {
+        $kupon = new Coupon();
+        $kupon->name = $request->name;
+        $kupon->code = $request->code;
+        $kupon->quantity = $request->quantity;
+        $kupon->min_purchase_amount = $request->min_purchase_amount;
+        $kupon->expire_date = $request->expire_date;
+        $kupon->discount_type = $request->discount_type;
+        $kupon->discount = $request->discount;
+        $kupon->status = $request->status;
+        $kupon->save();
+
+        toastr()->success('Kupon berhasil dibuat');
         return to_route('admin.coupon.index');
     }
 
