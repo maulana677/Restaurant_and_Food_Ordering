@@ -59,17 +59,30 @@ class CouponController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $kupon = Coupon::findOrFail($id);
+        return view('admin.coupon.edit', compact('kupon'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CouponCreateRequest $request, string $id)
     {
-        //
+        $kupon = Coupon::findOrFail($id);
+        $kupon->name = $request->name;
+        $kupon->code = $request->code;
+        $kupon->quantity = $request->quantity;
+        $kupon->min_purchase_amount = $request->min_purchase_amount;
+        $kupon->expire_date = $request->expire_date;
+        $kupon->discount_type = $request->discount_type;
+        $kupon->discount = $request->discount;
+        $kupon->status = $request->status;
+        $kupon->save();
+
+        toastr()->success('Kupon berhasil diedit');
+        return to_route('admin.coupon.index');
     }
 
     /**
@@ -77,6 +90,11 @@ class CouponController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Coupon::findOrFail($id)->delete();
+            return response(['status' => 'success', 'message' => 'Data berhasil dihapus!']);
+        } catch (\Exception $e) {
+            return response(['status' => 'error', 'message' => 'Ada Kesalahan!']);
+        }
     }
 }
