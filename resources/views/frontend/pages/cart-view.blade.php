@@ -257,10 +257,10 @@
                 })
             }
 
-            $('#coupon_form').on('submit', function() {
+            $('#coupon_form').on('submit', function(e) {
                 e.preventDefault();
                 let code = $("#coupon_code").val();
-                let subtotal = getCratTotal();
+                let subtotal = getCartTotal();
 
                 couponApply(code, subtotal);
             })
@@ -280,7 +280,8 @@
 
                     },
                     error: function(xhr, status, error) {
-
+                        let errorMessage = xhr.responseJSON.message;
+                        toastr.error(errorMessage);
                     },
                     complete: function() {
 

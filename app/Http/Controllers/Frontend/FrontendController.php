@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\SectionTitle;
 use App\Models\Slider;
@@ -60,7 +61,31 @@ class FrontendController extends Controller
         return view('frontend.layouts.ajax-files.product-popup-modal', compact('product'))->render();
     }
 
-    function applyCoupon(): Response
+    function applyCoupon(Request $request)
     {
+        $subtotal = $request->subtotal;
+        $code = $request->code;
+
+        $coupon = Coupon::where('code', $code)->first();
+
+        if (!$coupon) {
+            return response(['message' => 'Kode Kupon Tidak Valid.'], 422);
+        }
+        if ($coupon->quantity <= 0) {
+            return response(['message' => 'Kupon berhasil dipakai.'], 422);
+        }
+        if ($coupon->expire_date < now()) {
+            return response(['message' => 'Kupon telah kadaluarsa.'], 422);
+        }
+
+        if ($coupon->discount_type === 'percent') {
+            $discount = $subtotal * ($coupon->discount / 100);
+        } elseif ($coupon->discount_type === 'amount') {
+            $discount = $coupon->discount;
+        }
+
+        $finalTotal = $subtotal - $discount;
+
+        return response(['discount' => $discount, 'finalTotal' => $finalTotal]);
     }
 }
