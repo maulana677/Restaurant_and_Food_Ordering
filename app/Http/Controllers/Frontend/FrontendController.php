@@ -86,6 +86,6 @@ class FrontendController extends Controller
 
         $finalTotal = $subtotal - $discount;
 
-        return response(['discount' => $discount, 'finalTotal' => $finalTotal]);
+        return response(['message' => 'Kupon Berhasil Digunakan.', 'discount' => $discount, 'finalTotal' => $finalTotal]);
     }
 }
