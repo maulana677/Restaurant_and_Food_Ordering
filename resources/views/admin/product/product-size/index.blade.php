@@ -70,7 +70,6 @@
                                 @if (count($sizes) === 0)
                                     <tr>
                                         <td colspan='3' class="text-center">No data found!</td>
-
                                     </tr>
                                 @endif
                             </tbody>

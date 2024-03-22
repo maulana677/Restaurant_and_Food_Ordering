@@ -201,6 +201,7 @@
                             cartTotal = response.cart_total;
                             $('#subtotal').text("{{ config('settings.site_currency_icon') }}" +
                                 cartTotal);
+
                             $("#final_total").text("{{ config('settings.site_currency_icon') }}" +
                                 response.grand_cart_total)
 

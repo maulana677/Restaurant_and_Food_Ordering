@@ -76,7 +76,7 @@ if (!function_exists('productTotal')) {
     }
 }
 
-/** grand cart total */
+/** harga total keranjang */
 if (!function_exists('grandCartTotal')) {
     function grandCartTotal($deliveryFee = 0)
     {

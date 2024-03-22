@@ -117,6 +117,7 @@ class CartController extends Controller
     function cartDestroy()
     {
         Cart::destroy();
+        session()->forget('coupon');
         return redirect()->back();
     }
 }
