@@ -93,6 +93,9 @@
                     <li class="{{ setSidebarActive(['admin.coupon.*']) }}">
                         <a class="nav-link" href="{{ route('admin.coupon.index') }}">Coupon</a>
                     </li>
+                    <li class="{{ setSidebarActive(['admin.coupon.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.delivery-area.index') }}">Delilvery Areas</a>
+                    </li>
                 </ul>
             </li>
             <li class="{{ setSidebarActive(['admin.setting.index']) }}"><a class="nav-link"
