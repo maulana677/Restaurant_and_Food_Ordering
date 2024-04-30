@@ -81,7 +81,7 @@ class CouponController extends Controller
         $kupon->status = $request->status;
         $kupon->save();
 
-        toastr()->success('Kupon berhasil diedit');
+        toastr()->success('Kupon berhasil diubah');
         return to_route('admin.coupon.index');
     }
 
