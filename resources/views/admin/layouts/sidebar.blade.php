@@ -96,6 +96,9 @@
                     <li class="{{ setSidebarActive(['admin.delivery-area.*']) }}">
                         <a class="nav-link" href="{{ route('admin.delivery-area.index') }}">Delilvery Areas</a>
                     </li>
+                    <li class="{{ setSidebarActive(['admin.delivery-area.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.delivery-area.index') }}">Payment Gateways</a>
+                    </li>
                 </ul>
             </li>
             <li class="{{ setSidebarActive(['admin.setting.index']) }}"><a class="nav-link"
