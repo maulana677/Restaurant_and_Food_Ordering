@@ -6,8 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\AddressCreateRequest;
 use App\Models\Address;
 use App\Models\DeliveryArea;
+use App\Models\Order;
+use App\Models\ProductRating;
+use App\Models\Reservation;
+use App\Models\Wishlist;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+
 
 class DashboardController extends Controller
 {
@@ -15,6 +20,7 @@ class DashboardController extends Controller
     {
         $deliveryAreas = DeliveryArea::where('status', 1)->get();
         $userAddresses = Address::where('user_id', auth()->user()->id)->get();
+
         return view('frontend.dashboard.index', compact('deliveryAreas', 'userAddresses'));
     }
 
@@ -31,8 +37,9 @@ class DashboardController extends Controller
         $address->type = $request->type;
         $address->save();
 
-        toastr()->success('Alamat berhasil dibuat');
-        return to_route('admin.dashboard');
+        toastr()->success('Created Successfully');
+
+        return redirect()->back();
     }
 
     function updateAddress(string $id, AddressCreateRequest $request)
@@ -48,7 +55,7 @@ class DashboardController extends Controller
         $address->type = $request->type;
         $address->save();
 
-        toastr()->success('Alamat berhasil diubah');
+        toastr()->success('Updated Successfully');
 
         return to_route('admin.dashboard');
     }
@@ -58,8 +65,8 @@ class DashboardController extends Controller
         $address = Address::findOrFail($id);
         if ($address && $address->user_id === auth()->user()->id) {
             $address->delete();
-            return response(['status' => 'success', 'message' => 'Data Berhasil Dihapus']);
+            return response(['status' => 'success', 'message' => 'Deleted Successfully']);
         }
-        return response(['status' => 'error', 'message' => 'Terjadi sesuatu!']);
+        return response(['status' => 'error', 'message' => 'something went wrong!']);
     }
 }
