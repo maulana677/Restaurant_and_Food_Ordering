@@ -1,195 +1,156 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-    <!--=============================
-            BREADCRUMB START
-        ==============================-->
-    <section class="fp__breadcrumb" style="background: url(images/counter_bg.jpg);">
+    <!--============================= BREADCRUMB START ==============================-->
+    <section class="fp__breadcrumb" style="background: url({{ asset('frontend/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
                 <div class="fp__breadcrumb_text">
                     <h1>cart view</h1>
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li><a href="#">cart view</a></li>
+                        <li><a href="{{ url('/') }}">home</a></li>
+                        <li><a href="javascript:;">cart view</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-    <!--=============================
-            BREADCRUMB END
-        ==============================-->
+    <!--============================= BREADCRUMB END ==============================-->
 
 
-    <!--============================
-            CART VIEW START
-        ==============================-->
+    <!--============================ CHECK OUT PAGE START ==============================-->
     <section class="fp__cart_view mt_125 xs_mt_95 mb_100 xs_mb_70">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 wow fadeInUp" data-wow-duration="1s">
-                    <div class="fp__cart_list">
-                        <div class="table-responsive">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th class="fp__pro_img">
-                                            Image
-                                        </th>
+                <div class="col-lg-8 col-lg-7 wow fadeInUp" data-wow-duration="1s">
+                    <div class="fp__checkout_form">
+                        <div class="fp__check_form">
+                            <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i
+                                        class="far fa-plus"></i> add address</a></h5>
 
-                                        <th class="fp__pro_name">
-                                            details
-                                        </th>
-
-                                        <th class="fp__pro_status">
-                                            price
-                                        </th>
-
-                                        <th class="fp__pro_select">
-                                            quantity
-                                        </th>
-
-                                        <th class="fp__pro_tk">
-                                            total
-                                        </th>
-
-                                        <th class="fp__pro_icon">
-                                            <a class="clear_all" href="#">clear all</a>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td class="fp__pro_img"><img src="images/menu1.png" alt="product"
-                                                class="img-fluid w-100">
-                                        </td>
-
-                                        <td class="fp__pro_name">
-                                            <a href="#">Hyderabadi Biryani</a>
-                                            <span>medium</span>
-                                            <p>coca-cola</p>
-                                            <p>7up</p>
-                                        </td>
-
-                                        <td class="fp__pro_status">
-                                            <h6>$180.00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_select">
-                                            <div class="quentity_btn">
-                                                <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                                <input type="text" placeholder="1">
-                                                <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                            <div class="fp__address_modal">
+                                <div class="modal fade" id="address_modal" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="address_modalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="address_modalLabel">add new address
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
-                                        </td>
+                                            <div class="modal-body">
+                                                <form action="{{ route('address.store') }}" method="POST">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <h4>add new address</h4>
+                                                        </div>
 
-                                        <td class="fp__pro_tk">
-                                            <h6>$180,00</h6>
-                                        </td>
+                                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                                            <div class="fp__check_single_form">
+                                                                <select id="select_js3" name="area">
+                                                                    <option value="">Slelect Area</option>
+                                                                    @foreach ($deliveryAreas as $area)
+                                                                        <option value="{{ $area->id }}">
+                                                                            {{ $area->area_name }}</option>
+                                                                    @endforeach
 
-                                        <td class="fp__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fp__pro_img">
-                                            <img src="images/menu2.png" alt="product" class="img-fluid w-100">
-                                        </td>
+                                                                </select>
+                                                            </div>
+                                                        </div>
 
-                                        <td class="fp__pro_name">
-                                            <a href="#">Chicken Masala</a>
-                                            <span>small</span>
-                                        </td>
-                                        <td class="fp__pro_status">
-                                            <h6>$140.00</h6>
-                                        </td>
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="text" placeholder="First Name"
+                                                                    name="first_name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="text" placeholder="Last Name"
+                                                                    name="last_name">
+                                                            </div>
+                                                        </div>
 
-                                        <td class="fp__pro_select">
-                                            <div class="quentity_btn">
-                                                <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                                <input type="text" placeholder="1">
-                                                <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="text" placeholder="Phone" name="phone">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="text" placeholder="Email" name="email">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                                            <div class="fp__check_single_form">
+                                                                <textarea cols="3" rows="4" placeholder="Address" name="address"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="fp__check_single_form check_area">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="type" id="flexRadioDefault1"
+                                                                        value="home">
+                                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                                        home
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="type" id="flexRadioDefault2"
+                                                                        value="office">
+                                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                                        office
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="button"
+                                                                class="common_btn cancel_new_address">cancel</button>
+                                                            <button type="submit" class="common_btn">save
+                                                                address</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </td>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <td class="fp__pro_tk">
-                                            <h6>$140,00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fp__pro_img">
-                                            <img src="images/menu3.png" alt="product" class="img-fluid w-100">
-                                        </td>
-
-                                        <td class="fp__pro_name">
-                                            <a href="#">Daria Shevtsova</a>
-                                            <span>large</span>
-                                            <p>coca-cola</p>
-                                            <p>7up</p>
-                                        </td>
-
-
-                                        <td class="fp__pro_status">
-                                            <h6>$220.00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_select">
-                                            <div class="quentity_btn">
-                                                <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                                <input type="text" placeholder="1">
-                                                <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                            <div class="row">
+                                @foreach ($addresses as $address)
+                                    <div class="col-md-6">
+                                        <div class="fp__checkout_single_address">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="home">
+                                                <label class="form-check-label" for="home">
+                                                    @if ($address->type === 'home')
+                                                        <span class="icon"><i class="fas fa-home"></i> home</span>
+                                                    @else
+                                                        <span class="icon"><i class="fas fa-home"></i> office</span>
+                                                    @endif
+                                                    <span class="address">{{ $address->address }},
+                                                        {{ $address->deliveryArea?->area_name }}</span>
+                                                </label>
                                             </div>
-                                        </td>
-
-                                        <td class="fp__pro_tk">
-                                            <h6>$220,00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fp__pro_img">
-                                            <img src="images/menu4.png" alt="product" class="img-fluid w-100">
-                                        </td>
-
-                                        <td class="fp__pro_name">
-                                            <a href="#">Hyderabadi Biryani</a>
-                                            <span>medium</span>
-                                            <p>7up</p>
-                                        </td>
-
-                                        <td class="fp__pro_status">
-                                            <h6>$150.00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_select">
-                                            <div class="quentity_btn">
-                                                <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                                <input type="text" placeholder="1">
-                                                <button class="btn btn-success"><i class="fal fa-plus"></i></button>
-                                            </div>
-                                        </td>
-
-                                        <td class="fp__pro_tk">
-                                            <h6>$150.00</h6>
-                                        </td>
-
-                                        <td class="fp__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1s">
-                    <div class="fp__cart_list_footer_button">
+                    <div id="sticky_sidebar" class="fp__cart_list_footer_button">
                         <h6>total cart</h6>
                         <p>subtotal: <span>$124.00</span></p>
                         <p>delivery: <span>$00.00</span></p>
@@ -205,7 +166,5 @@
             </div>
         </div>
     </section>
-    <!--============================
-            CART VIEW END
-        ==============================-->
+    <!--============================ CHECK OUT PAGE END ==============================-->
 @endsection
