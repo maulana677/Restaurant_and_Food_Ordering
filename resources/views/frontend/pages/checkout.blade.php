@@ -17,7 +17,6 @@
     </section>
     <!--============================= BREADCRUMB END ==============================-->
 
-
     <!--============================ CHECK OUT PAGE START ==============================-->
     <section class="fp__cart_view mt_125 xs_mt_95 mb_100 xs_mb_70">
         <div class="container">
@@ -132,8 +131,8 @@
                                     <div class="col-md-6">
                                         <div class="fp__checkout_single_address">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="home">
+                                                <input class="form-check-input v_address" value="{{ $address->id }}"
+                                                    type="radio" name="flexRadioDefault" id="home">
                                                 <label class="form-check-label" for="home">
                                                     @if ($address->type === 'home')
                                                         <span class="icon"><i class="fas fa-home"></i> home</span>
@@ -155,14 +154,18 @@
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1s">
                     <div id="sticky_sidebar" class="fp__cart_list_footer_button">
                         <h6>total cart</h6>
-                        <p>subtotal: <span>$124.00</span></p>
+                        <p>subtotal: <span>{{ currencyPosition(cartTotal()) }}</span></p>
                         <p>delivery: <span>$00.00</span></p>
-                        <p>discount: <span>$10.00</span></p>
-                        <p class="total"><span>total:</span> <span>$134.00</span></p>
-                        <form>
-                            <input type="text" placeholder="Coupon Code">
-                            <button type="submit">apply</button>
-                        </form>
+                        @if (session()->has('coupon'))
+                            <p>discount:
+                                <span>{{ currencyPosition(session()->get('coupon')['discount']) }}</span>
+                            </p>
+                        @else
+                            <p>discount:
+                                <span>{{ currencyPosition(0) }}</span>
+                            </p>
+                        @endif
+                        <p class="total"><span>total:</span> <span>{{ currencyPosition(grandCartTotal()) }}</span></p>
                         <a class="common_btn" href=" #">checkout</a>
                     </div>
                 </div>
@@ -171,3 +174,30 @@
     </section>
     <!--============================ CHECK OUT PAGE END ==============================-->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.v_address').on('click', function() {
+                let addressId = $(this).val();
+
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ route('checkout.delivery-cal', ':id') }}'.replace(':id', addressId),
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+
+                    },
+                    error: function(xhr, status, error) {
+
+                    },
+                    complete: function() {
+
+                    }
+                })
+            })
+        })
+    </script>
+@endpush
