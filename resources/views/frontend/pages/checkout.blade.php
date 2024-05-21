@@ -155,7 +155,7 @@
                     <div id="sticky_sidebar" class="fp__cart_list_footer_button">
                         <h6>total cart</h6>
                         <p>subtotal: <span>{{ currencyPosition(cartTotal()) }}</span></p>
-                        <p>delivery: <span>$00.00</span></p>
+                        <p>delivery: <span id="delivery_fee">$00.00</span></p>
                         @if (session()->has('coupon'))
                             <p>discount:
                                 <span>{{ currencyPosition(session()->get('coupon')['discount']) }}</span>
@@ -165,7 +165,8 @@
                                 <span>{{ currencyPosition(0) }}</span>
                             </p>
                         @endif
-                        <p class="total"><span>total:</span> <span>{{ currencyPosition(grandCartTotal()) }}</span></p>
+                        <p class="total"><span>total:</span> <span
+                                id="grand_total">{{ currencyPosition(grandCartTotal()) }}</span></p>
                         <a class="common_btn" href=" #">checkout</a>
                     </div>
                 </div>
@@ -178,23 +179,31 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $('.v_address').prop('checked', false);
             $('.v_address').on('click', function() {
                 let addressId = $(this).val();
+                let deliveryFee = $('#delivery_fee');
+                let grandTotal = $('#grand_total');
 
                 $.ajax({
                     method: 'GET',
-                    url: '{{ route('checkout.delivery-cal', ':id') }}'.replace(':id', addressId),
+                    url: '{{ route('checkout.delivery-cal', ':id') }}'.replace(":id", addressId),
                     beforeSend: function() {
-
+                        showLoader()
                     },
                     success: function(response) {
+                        deliveryFee.text("{{ currencyPosition(':amount') }}".replace(":amount",
+                            response.delivery_fee));
 
+                        grandTotal.text("{{ currencyPosition(':amount') }}".replace(":amount",
+                            response.grand_total));
                     },
                     error: function(xhr, status, error) {
-
+                        let errorMessage = xhr.responseJSON.message;
+                        toastr.success(errorMessage);
                     },
                     complete: function() {
-
+                        hideLoader()
                     }
                 })
             })

@@ -18,6 +18,14 @@ class CheckoutController extends Controller
 
     function calculateDeliveryCharge(string $id)
     {
-        return $id;
+        try {
+            $address = Address::findOrFail($id);
+            $deliveryFee = $address->deliveryArea?->delivery_fee;
+            $grandTotal = grandCartTotal() + $deliveryFee;
+            return response(['delivery_fee' => $deliveryFee, 'grand_total' => $grandTotal]);
+        } catch (\Exception $e) {
+            logger($e);
+            return response(['message' => 'Something went wrong!'], 422);
+        }
     }
 }
