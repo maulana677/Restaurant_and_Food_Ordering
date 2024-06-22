@@ -28,4 +28,9 @@ class CheckoutController extends Controller
             return response(['message' => 'Something went wrong!'], 422);
         }
     }
+
+    function checkoutRedirect(Request $request)
+    {
+        dd($request->all());
+    }
 }
