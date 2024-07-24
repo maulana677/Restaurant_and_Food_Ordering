@@ -84,7 +84,8 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         try {
-            Category::findOrFail($id)->delete();
+            $kategori = Category::findOrFail($id);
+            $kategori->delete();
             return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
         } catch (\Exception $e) {
             return response(['status' => 'error', 'message' => 'something went wrong!']);

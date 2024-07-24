@@ -31,6 +31,16 @@ class CheckoutController extends Controller
 
     function checkoutRedirect(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'id' => ['required', 'integer']
+        ]);
+
+        $address = Address::with('deliveryArea')->findOrFail($request->id);
+
+        $selectedAddress = $address->address . ', Aria: ' . $address->deliveryArea?->area_name;
+
+        session('address', $selectedAddress);
+
+        return response(['redirect_url' => route('payment.index')]);
     }
 }
